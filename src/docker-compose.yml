@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  Catalogdb:
+  catalogdb:
     image: mongo
 
   catalog.api:
