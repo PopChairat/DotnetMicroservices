@@ -1,3 +1,5 @@
+using Basket.API.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -12,6 +14,8 @@ builder.Services.AddStackExchangeRedisCache(option =>
     option.Configuration = builder.Configuration.GetValue<string>("CacheSettings:ConnectionString");
 });
 
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
@@ -20,7 +24,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basket.API v1"));
 }
 
 app.UseAuthorization();
